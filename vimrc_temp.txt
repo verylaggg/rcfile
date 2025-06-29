@@ -1,0 +1,167 @@
+""""""""""""""""""""""""""""""""""""
+"
+" Built-in Option Setting
+" 
+""""""""""""""""""""""""""""""""""""
+syntax on
+set title                       "show file info. at top bar
+set ruler                       "show cursor position at right-bottom corner
+set showmode                    "show file status at bottom line
+set nu                          "show number of lines
+set cursorline                  "show underline where the cursor is
+set bg=dark                     "set background to dark
+set expandtab                   "turn <tab> to <space>
+set tabstop=4                   "display 4 <space> for 1 <tab>
+set softtabstop=4               "align tabs every 4 <space> when deleting
+set shiftwidth=4                "align tabs every 4 <space>
+set autoindent                  "follow the indent from the last line
+set hlsearch                    "highlight the words when searching
+set showmatch                   "show matching brackets
+set incsearch                   "match the words during typing for search
+set ic                          "ignore case
+set backspace=2                 "enable backspace under insert mode
+
+set history=1000                "save 1000 used commands
+set scrolloff=4                 "cursor offset from border when scrolling
+set sidescrolloff=10            "offset from side-border; effective when no word wrapping
+set splitright                  "split window at right
+set wildmenu                    "show more powerful menu in command mode
+set wildmode=list:longest       "show the files in list display
+set diffopt=filler,context:9999 "set how far from the diff-lines are folded
+"set nowrapscan
+"set cc=80                      "(colorcolumn) highlight column @ 80char
+"set autochdir                  "auto change the directroy based on opening file
+""""""""""""""""""""""""""""""""""""
+" 
+" mapping setting
+"
+" Note ^[key is not typed by character but typing ctrl+v before alt+key
+"
+""""""""""""""""""""""""""""""""""""
+let g:mapleader = ""
+
+" common mapping
+inoremap <leader>v <C-R>"
+cnoremap <leader>v <C-R>"
+nnoremap <leader>n :noh<CR>
+nnoremap ff ye:!find /data/yuhwu0e9/ -iname "*<C-R>"*"
+nnoremap gr ye:!grep --color <C-R>" -rin /data/yuhwu0e9/
+nnoremap gb ye:b <C-R>"
+nnoremap * *N
+"noremap! <C-I> <Ins>
+nnoremap <expr> ssb &scb ? ':set noscb<CR>' : ':set scb<CR>'
+nnoremap <expr> scb &cursorbind ? ':set nocursorbind<CR>' : ':set cursorbind<CR>'
+nnoremap <expr> swr &wrap ? ':set nowrap<CR>' : ':set wrap<CR>'
+nnoremap <expr> snu &number ? ':set nonumber<CR>' : ':set number<CR>'
+nnoremap <leader>g :echo expand('%:p')<CR>
+" Quick write/load session
+nnoremap ss :mksession! ~/vim_session/<C-D>
+nnoremap so :source ~/vim_session/<C-D>
+nnoremap get :echo join(map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), 'bufname(v:val)'), ' ')<CR>
+nnoremap rp ye:%s/\<<C-R>"\>/<C-R>"/g
+
+" cursor/window operation
+" screen shift 10 units (alt + R/L/U/D)
+" only when set nowrap, shift R/L is effective
+inoremap <leader>i <ESC>l
+"inoremap <leader>l <RIGHT>
+"inoremap <leader>h <LEFT>
+"inoremap <leader>k <UP>
+"inoremap <leader>j <DOWN>
+"inoremap <leader>L <RIGHT><RIGHT><RIGHT><RIGHT><RIGHT>
+"inoremap <leader>H <LEFT><LEFT><LEFT><LEFT><LEFT>
+"inoremap <leader>K <UP><UP><UP><UP><UP>
+"inoremap <leader>J <DOWN><DOWN><DOWN><DOWN><DOWN>
+nnoremap <leader>- :vertical resize -10<CR>
+nnoremap <leader>= :vertical resize +10<CR>
+nnoremap <leader>z zz
+
+noremap <leader>l 25zl
+noremap <leader>h 25zh
+noremap <leader>k 10<C-Y>
+noremap <leader>j 10<C-E>
+noremap <leader>L 50zl
+noremap <leader>H 50zh
+noremap <leader>K 20<C-Y>
+noremap <leader>J 20<C-E>
+noremap <C-L> 25l
+noremap <C-H> 25h
+noremap <C-K> 10k
+noremap <C-J> 10j
+
+" tab operation
+" gt gT can also be used to switch tabs
+nnoremap <C-T>. :tabnext<CR>
+nnoremap <C-T>, :tabprevious<CR>
+nnoremap <C-T>n :ls!<CR>:tabnew 
+nnoremap <C-T>q :tabclose<CR>
+nnoremap <C-T>o :tabonly<CR>
+
+" vim diff mode search next/previous
+" vimdiff short cut 
+" dp :diffput (curr > another)
+" do :diffget (curr < another)
+nnoremap <expr> dm &diff ? ':diffoff<CR><C-W>w:diffoff<CR><C-W>w' : ':diffthis<CR><C-W>w:diffthis<CR><C-W>w'
+nnoremap <expr> <leader>, &diff ? '[c' : ':bp<CR>'
+nnoremap <expr> <leader>. &diff ? ']c' : ':bn<CR>'
+nnoremap <expr> du &diff ? ':diffupdate<CR>' : 'du'
+"if &diff
+"    " Your setting you want to set when using diff mode.
+"endif
+
+" multi-buffer/window operation
+"nnoremap <leader>. :bn<CR>
+"nnoremap <leader>, :bp<CR>
+nnoremap <leader>> :bl<CR>
+nnoremap <leader>< :bf<CR>
+nnoremap <leader>w <C-W>w
+nnoremap <leader>W <C-W>h
+nnoremap <leader>r <C-W>r
+nnoremap <leader>v :ls!<CR>:vert sb<SPACE>
+nnoremap <leader>b :ls!<CR>:b<SPACE>
+
+" comment/bracket completion
+" inoremap /* /**/<left>
+" inoremap " ""<left>
+" inoremap ' ''<left>
+" inoremap ( ()<left>
+" inoremap [ []<left>
+" inoremap { {}<left>
+" inoremap {<CR> {<CR>}<ESC>O
+" inoremap {;<CR> {<CR>};<ESC>O
+
+"syntax display list
+"au BufNewFile,BufRead *.rpt set syntax=falcon
+au BufNewFile,BufRead *.rpt set syntax=r
+
+""""""""""""""""""""""""""""""""""""
+"
+" netrw builtin plugin setting
+"
+""""""""""""""""""""""""""""""""""""
+let g:netrw_list_hide= '\(^\|\s\s\)\zs\.\S\+'
+let g:netrw_fastbrowse = 0
+let g:netrw_banner = 0
+let g:netrw_browse_split = 4
+let g:netrw_liststyle = 3
+let g:netrw_winsize = 30
+let g:netrw_altv = 1
+let g:NetrwIsOpen = 0
+
+function! ToggleNetrw()
+    if g:NetrwIsOpen
+        let i = bufnr("$")
+        while (i >= 1)
+            if (getbufvar(i, "&filetype") == "netrw")
+                silent exe "bw" . i
+            endif
+            let i-=1
+        endwhile
+        let g:NetrwIsOpen=0
+    else
+        let g:NetrwIsOpen=1
+        silent Vexplore
+    endif
+endfunction
+
+map <leader>d :call ToggleNetrw()<CR>
