@@ -53,6 +53,7 @@ nnoremap <expr> ssb &scb ? ':set noscb<CR>' : ':set scb<CR>'
 nnoremap <expr> scb &cursorbind ? ':set nocursorbind<CR>' : ':set cursorbind<CR>'
 nnoremap <expr> swr &wrap ? ':set nowrap<CR>' : ':set wrap<CR>'
 nnoremap <expr> snu &number ? ':set nonumber<CR>' : ':set number<CR>'
+nnoremap <expr> sai &autoindent ? ':set noautoindent<CR>' : ':set autoindent<CR>'
 nnoremap <leader>g :echo expand('%:p')<CR>
 " Quick write/load session
 nnoremap ss :mksession! ~/vim_session/<C-D>
